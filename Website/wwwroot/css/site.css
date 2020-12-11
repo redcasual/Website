@@ -163,11 +163,11 @@ form#menu-search {
 
 .results {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 @media (max-width: 490px) {
     .results {
-        flex-direction: column;
+        flex-direction: row;
     }
 }

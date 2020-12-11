@@ -16,8 +16,6 @@ namespace Website.Pages
 
         public IEnumerable<IOrderItem> MenuItems { get; set; }
 
-        public string[] OrderType { get; set; }
-
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -25,9 +23,9 @@ namespace Website.Pages
             _logger = logger;
         }
 
-        public void OnGet(string SearchTerms, string[] OrderType, double CaloriesMin, double CaloriesMax, double PriceMin, double PriceMax)
+        public void OnGet(string SearchTerms, string[] ItemType, double? CaloriesMin, double? CaloriesMax, double? PriceMin, double? PriceMax)
         {
-            MenuItems = Menu.Search(MenuItems, SearchTerms, OrderType, CaloriesMin, CaloriesMax, PriceMin, PriceMax);
+            MenuItems = Menu.Search(Menu.FullMenu(), SearchTerms, ItemType, CaloriesMin, CaloriesMax, PriceMin, PriceMax);
         }
     }
 }

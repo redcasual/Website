@@ -271,35 +271,35 @@ namespace Website
 
         public static IEnumerable<IOrderItem> Search(IEnumerable<IOrderItem> menu, string terms, string[] type, double? CaloriesMin, double? CaloriesMax, double? PriceMin, double? PriceMax)
         {
-            List<IOrderItem> results = new List<IOrderItem>();
+            IEnumerable<IOrderItem> results = menu;
 
             // null check
             if (terms != null)
             {
-                results = (List<IOrderItem>)menu.Where(item => item.ToString().Contains(terms, StringComparison.InvariantCultureIgnoreCase));
-                results = (List<IOrderItem>)menu.Where(item => item.Description.Contains(terms, StringComparison.InvariantCultureIgnoreCase));
+                results = menu.Where(item => item.ToString().Contains(terms, StringComparison.InvariantCultureIgnoreCase));
+                results = results.Where(item => item.Description.Contains(terms, StringComparison.InvariantCultureIgnoreCase));
             }
 
             if(type != null && type.Length != 0)
             {
-                results = (List<IOrderItem>)menu.Where(item => type.Contains(item.Type));
+                results = results.Where(item => type.Contains(item.Type));
             }
 
             if (CaloriesMin != null || CaloriesMax != null)
             {
                 if (CaloriesMin == null)
                 {
-                    results = (List<IOrderItem>)menu.Where(item => item.Calories < CaloriesMax);
+                    results = results.Where(item => item.Calories <= CaloriesMax);
                 }
 
                 else if (CaloriesMax == null)
                 {
-                    results = (List<IOrderItem>)menu.Where(item => item.Calories > CaloriesMin);
+                    results = results.Where(item => item.Calories >= CaloriesMin);
                 }
 
                 else
                 {
-                    //results = (List<IOrderItem>)menu.Where(item => && item.Calories > CaloriesMin && item.Calories < CaloriesMax);
+                    results = results.Where(item => item.Calories >= CaloriesMin && item.Calories <= CaloriesMax);
                 }
             }
 
@@ -307,17 +307,17 @@ namespace Website
             {
                 if (PriceMin == null)
                 {
-                    results = (List<IOrderItem>)menu.Where(item => item.Price < PriceMax);
+                    results = results.Where(item => item.Price <= PriceMax);
                 }
 
                 else if (PriceMax == null)
                 {
-                    results = (List<IOrderItem>)menu.Where(item => item.Price > PriceMin);
+                    results = results.Where(item => item.Price >= PriceMin);
                 }
 
                 else
                 {
-                    //results = (List<IOrderItem>)menu.Where(item => item.Price > PriceMin && item.Price < PriceMax);
+                    results = results.Where(item => item.Price >= PriceMin && item.Price <= PriceMax);
                 }
             }
 
