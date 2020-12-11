@@ -10,6 +10,14 @@ namespace Website.Pages
 {
     public class IndexModel : PageModel
     {
+        public string SearchTerms { get; set; }
+
+        public string[] ItemType { get; set; }
+
+        public IEnumerable<IOrderItem> MenuItems { get; set; }
+
+        public string[] OrderType { get; set; }
+
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -17,9 +25,9 @@ namespace Website.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public void OnGet(string SearchTerms, string[] OrderType, double CaloriesMin, double CaloriesMax, double PriceMin, double PriceMax)
         {
-
+            MenuItems = Menu.Search(MenuItems, SearchTerms, OrderType, CaloriesMin, CaloriesMax, PriceMin, PriceMax);
         }
     }
 }
